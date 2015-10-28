@@ -1,0 +1,613 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Export</title>
+<style type="text/css">
+                
+                	/* Tovek light blue: #32A5C4 */
+                	/* Tovek dark blue: #002168 */
+
+                    BODY           {SCROLLBAR-FACE-COLOR: #6c778d; SCROLLBAR-HIGHLIGHT-COLOR: #929aa8; SCROLLBAR-SHADOW-COLOR: #929aa8; SCROLLBAR-DARKSHADOW-COLOR: #303a4f; SCROLLBAR-3DLIGHT-COLOR: #303a4f; SCROLLBAR-ARROW-COLOR: #ffffff; SCROLLBAR-TRACK-COLOR: #303a4f;
+                    	font-family: Arial, Arial CE, Helvetica, Geneva, sans-serif; FONT-WEIGHT: normal; FONT-SIZE: 9.5pt; TEXT-DECORATION: none;
+                    	COLOR: #000000; BACKGROUND-COLOR: #FFFFFF}
+                    A			   {PADDING-TOP: 3px; PADDING-BOTTOM: 2px;
+                    	FONT-WEIGHT: bold; TEXT-ALIGN: center; TEXT-DECORATION: none;
+                    	VERTICAL-ALIGN: middle; COLOR: #000000}
+					A:link 		   {COLOR: #32A5C4}
+					A:visited 	   {COLOR: #32A5C4}
+					A:active       {COLOR: #32A5C4}
+
+					.buttons		{font-size: 12pt; clear: both; margin-bottom: 1em; padding-top: 3em}
+					.buttons a.b		{padding-left: 0; padding-right: 0; margin-left: 0; margin-right: .75em}
+					.navigationBack  {margin-top: .5em; margin-left: 0;
+						font-weight: bold; font-size: 7.5pt}
+
+
+					.defaultText	{FONT-FAMILY: Arial, Arial CE, Helvetica, Geneva, sans-serif; FONT-WEIGHT: normal; FONT-SIZE: 9.5pt}
+					.highlighted	{font-weight: bold; background-color: rgba(189, 213, 223, 0.5); padding-left: 2pt; padding-right: 2pt}
+
+					.shortenedTextSeparator	{font-weight: bold; color: #002168}
+
+
+					.field			{}
+					.fieldName		{color: #32A5C4}
+					.fieldValue		{color: #002168}
+					.verticalField		{font-weight: bold; display: block}
+					.verticalFieldsDiv	{margin-top: 1em; margin-bottom: 1em}
+
+					div>span .scoreProgress	{letter-spacing: -3px; color: #32A5C4; font-size: 8pt; float: left}
+					.scoreProgress	{letter-spacing: -3px; color: #32A5C4; font-size: 8pt; float: left}
+					.scoreDiv		{width: 16em}
+
+					.summary		{margin-top: 1em; margin-bottom: 1em;
+						color: #002168; clear: both}
+
+					.basicRuleDiv	{border-bottom: 1px solid #32A5C4; height: 0px}
+					.thickRule			{border-width: 2px}
+
+					H1				{margin-top: 0em; margin-bottom: 0em; margin-left: 0em; margin-right: 0em;
+						padding-top: 0em; padding-bottom: 0em; padding-left: 0em; padding-right: 0em;
+						FONT-SIZE: 13pt; font-weight: bold;
+						TEXT-ALIGN: left; VERTICAL-ALIGN: middle; COLOR: #002168}
+					H2	{padding-top: 0em; padding-bottom: 0em; margin-top: .25em; margin-bottom: 0em;
+						font-weight: bold; font-size: 13pt;
+						color: #32A5C4; cursor: help}
+
+					.documentDiv	{}
+					.documentTitleLeftDiv	{width: 20%; float: left; margin-top: 3pt;
+						margin-right: 10pt;
+						overflow: hidden; word-wrap: break-word}
+					.documentTitleCommonDiv	{}
+					.documentContentDiv	{width: 75%; float: right}
+					.documentContentDivWide {width: 100%}
+					.documentText	{padding-top: 1em; padding-bottom: 1em}
+
+					TR				{border-bottom: 1px solid #32A5C4}
+					TD				{PADDING-LEFT: 2px; PADDING-RIGHT: 2px; PADDING-TOP: 2px; PADDING-BOTTOM: 2px}
+					.textCell     {clear: both; overflow: auto}
+					.numericCell		{padding-left: 1%; padding-right: 1%;
+						text-align: right}
+                    .tableScore    {padding-right: 1em; float: right; COLOR: #000000}
+					.tableSummary  {margin-top: .5em; margin-left: .5em;
+						font-weight: bold; font-size: 7.5pt;
+						color: #002168}
+
+					.tableHead     {border-bottom: 2px solid #32A5C4; border-top: 0px solid #32A5C4;
+						TEXT-ALIGN: left; VERTICAL-ALIGN: middle; COLOR: #002168}
+					TD.tableHead	{padding: 0}
+					TD.tableHead.numericCell	{text-align: right}
+
+					.footer {float: right; clear: both}
+
+					a.sortheader.b 	{color: #000000; font-weight: normal; padding-bottom: 0}
+					span.sortarrow	{color: #32A5C4; font-size: 14pt}
+
+					.tableDiv		{padding-bottom: 2em; clear: both}
+
+					.tableBorder   {border-width: 1px; border-bottom: 2px solid #32A5C4; border-collapse: collapse}
+
+					.tableHeadLine {BORDER-RIGHT: 0px; PADDING-RIGHT: 5px; BORDER-TOP: 0px; PADDING-LEFT: 5px;
+					  FONT-WEIGHT: bold; FONT-SIZE: 11px; VERTICAL-ALIGN: middle; BORDER-LEFT: 0px; COLOR: #ffffff; BORDER-BOTTOM: 0px;
+					  FONT-FAMILY: Tahoma, Geneva, sans-serif; BACKGROUND-COLOR: #008DB2; TEXT-ALIGN: left}
+                    a img          {border: 2;}
+                
+		</style>
+<script type="text/javascript">
+                
+                    var image_path           = "";
+                    var image_up             = "";
+                    var image_down           = "";
+                    var image_none           = "";
+                    var europeandate         = true;
+                    var alternate_row_colors = true;
+
+                    addEvent(window, "load", sortables_init);
+                    var SORT_COLUMN_INDEX;
+                    var thead = false;
+                    function sortables_init() {
+	                    if (!document.getElementsByTagName) return;
+	                    tbls = document.getElementsByTagName("table");
+	                    for (ti=0;ti<tbls.length;ti++) {
+		                    thisTbl = tbls[ti];
+		                    if (((' '+thisTbl.className+' ').indexOf("sortable") != -1) && (thisTbl.id)) {
+			                    ts_makeSortable(thisTbl);
+		                    }
+	                    }
+                    }
+                    function ts_makeSortable(t) {
+	                    if (t.rows && t.rows.length > 0) {
+		                    if (t.tHead && t.tHead.rows.length > 0) {
+			                    var firstRow = t.tHead.rows[t.tHead.rows.length-1];
+			                    thead = true;
+		                    } else {
+			                    var firstRow = t.rows[0];
+		                    }
+	                    }
+	                    if (!firstRow) return;
+
+	                    for (var i=0;i<firstRow.cells.length;i++) {
+		                    var cell = firstRow.cells[i];
+		                    var txt = ts_getInnerText(cell);
+		                    if (cell.className != "unsortable" && cell.className.indexOf("unsortable") == -1) {
+			                    cell.innerHTML = '<a href="#" class="sortheader b" onclick="ts_resortTable(this, '+i+');return false;">'+txt+'<span class="sortarrow">&nbsp;&nbsp;▾</span></a>';
+		                    }
+	                    }
+	                    if (alternate_row_colors) {
+		                    alternate(t);
+	                    }
+                    }
+                    function ts_getInnerText(el) {
+	                    if (typeof el == "string") return el;
+	                    if (typeof el == "undefined") { return el };
+	                    if (el.innerText) return el.innerText;	//Not needed but it is faster
+	                    var str = "";
+
+	                    var cs = el.childNodes;
+	                    var l = cs.length;
+	                    for (var i = 0; i < l; i++) {
+		                    switch (cs[i].nodeType) {
+			                    case 1: //ELEMENT_NODE
+				                    str += ts_getInnerText(cs[i]);
+				                    break;
+			                    case 3:	//TEXT_NODE
+				                    str += cs[i].nodeValue;
+				                    break;
+		                    }
+	                    }
+	                    return str;
+                    }
+                    function ts_resortTable(lnk, clid) {
+	                    var span;
+	                    for (var ci=0;ci<lnk.childNodes.length;ci++) {
+		                    if (lnk.childNodes[ci].tagName && lnk.childNodes[ci].tagName.toLowerCase() == 'span') span = lnk.childNodes[ci];
+	                    }
+	                    var spantext = ts_getInnerText(span);
+	                    var td = lnk.parentNode;
+	                    var column = clid || td.cellIndex;
+	                    var t = getParent(td,'TABLE');
+	                    // Work out a type for the column
+	                    if (t.rows.length <= 1) return;
+	                    var itm = "";
+	                    var i = 1;
+	                    while (itm == "" && i < t.tBodies[0].rows.length) {
+		                    var itm = ts_getInnerText(t.tBodies[0].rows[i].cells[column]);
+		                    itm = trim(itm);
+		                    if (itm.substr(0,4) == "<!--" || itm.length == 0) {
+			                    itm = "";
+		                    }
+		                    i++;
+	                    }
+	                    if (itm == "") return;
+	                    sortfn = ts_sort_caseinsensitive;
+	                    //sortfn = ts_sort_cilocale;
+	                    if (itm.match(/^\d\d[\/\.-][a-zA-z][a-zA-Z][a-zA-Z][\/\.-]\d\d\d\d$/)) sortfn = ts_sort_date;
+	                    if (itm.match(/^\d\d[\/\.-]\d\d[\/\.-]\d\d\d{2}?$/)) sortfn = ts_sort_date;
+	                    if (itm.match(/^-?[Ł$€Ű˘´]\d/)) sortfn = ts_sort_numeric;
+	                    if (itm.match(/^-?(\d+[,\.]?)+(E[-+][\d]+)?%?$/)) sortfn = ts_sort_numeric;
+	                    SORT_COLUMN_INDEX = column;
+	                    var firstRow = new Array();
+	                    var newRows = new Array();
+	                    for (k=0;k<t.tBodies.length;k++) {
+		                    for (i=0;i<t.tBodies[k].rows[0].length;i++) {
+			                    firstRow[i] = t.tBodies[k].rows[0][i];
+		                    }
+	                    }
+	                    for (k=0;k<t.tBodies.length;k++) {
+		                    if (!thead) {
+			                    // Skip the first row
+			                    for (j=1;j<t.tBodies[k].rows.length;j++) {
+				                    newRows[j-1] = t.tBodies[k].rows[j];
+			                    }
+		                    } else {
+			                    // Do NOT skip the first row
+			                    for (j=0;j<t.tBodies[k].rows.length;j++) {
+				                    newRows[j] = t.tBodies[k].rows[j];
+			                    }
+		                    }
+	                    }
+	                    newRows.sort(sortfn);
+	                    if (span.getAttribute("sortdir") == 'down') {
+			                    ARROW = '&nbsp;&nbsp;▾'; //'&nbsp;&nbsp;<img src="'+ image_path + image_down + '" alt="▾"/>';
+			                    newRows.reverse();
+			                    span.setAttribute('sortdir','up');
+	                    } else {
+			                    ARROW = '&nbsp;&nbsp;▴'; //'&nbsp;&nbsp;<img src="'+ image_path + image_up + '" alt="▴"/>';
+			                    span.setAttribute('sortdir','down');
+	                    }
+                        for (i=0; i<newRows.length; i++) {
+		                    if (!newRows[i].className || (newRows[i].className && (newRows[i].className.indexOf('sortbottom') == -1))) {
+			                    t.tBodies[0].appendChild(newRows[i]);
+		                    }
+	                    }
+                        for (i=0; i<newRows.length; i++) {
+		                    if (newRows[i].className && (newRows[i].className.indexOf('sortbottom') != -1))
+			                    t.tBodies[0].appendChild(newRows[i]);
+	                    }
+	                    // Delete any other arrows there may be showing
+	                    var allspans = document.getElementsByTagName("span");
+	                    for (var ci=0;ci<allspans.length;ci++) {
+		                    if (allspans[ci].className == 'sortarrow') {
+			                    if (getParent(allspans[ci],"table") == getParent(lnk,"table")) { // in the same table as us?
+				                    allspans[ci].innerHTML = '&nbsp;&nbsp;▾'; //'&nbsp;&nbsp;<img src="'+ image_path + image_none + '" alt="▾"/>';
+			                    }
+		                    }
+	                    }
+	                    span.innerHTML = ARROW;
+	                    alternate(t);
+                    }
+                    function getParent(el, pTagName) {
+	                    if (el == null) {
+		                    return null;
+	                    } else if (el.nodeType == 1 && el.tagName.toLowerCase() == pTagName.toLowerCase()) {
+		                    return el;
+	                    } else {
+		                    return getParent(el.parentNode, pTagName);
+	                    }
+                    }
+                    function sort_date(date) {
+	                    dt = "00000000";
+	                    if (date.length == 11) {
+		                    mtstr = date.substr(3,3);
+		                    mtstr = mtstr.toLowerCase();
+		                    switch(mtstr) {
+			                    case "jan": var mt = "01"; break;
+			                    case "feb": var mt = "02"; break;
+			                    case "mar": var mt = "03"; break;
+			                    case "apr": var mt = "04"; break;
+			                    case "may": var mt = "05"; break;
+			                    case "jun": var mt = "06"; break;
+			                    case "jul": var mt = "07"; break;
+			                    case "aug": var mt = "08"; break;
+			                    case "sep": var mt = "09"; break;
+			                    case "oct": var mt = "10"; break;
+			                    case "nov": var mt = "11"; break;
+			                    case "dec": var mt = "12"; break;
+		                    }
+		                    dt = date.substr(7,4)+mt+date.substr(0,2);
+		                    return dt;
+	                    } else if (date.length == 10) {
+		                    if (europeandate == false) {
+			                    dt = date.substr(6,4)+date.substr(0,2)+date.substr(3,2);
+			                    return dt;
+		                    } else {
+			                    dt = date.substr(6,4)+date.substr(3,2)+date.substr(0,2);
+			                    return dt;
+		                    }
+	                    } else if (date.length == 8) {
+		                    yr = date.substr(6,2);
+		                    if (parseInt(yr) < 50) {
+			                    yr = '20'+yr;
+		                    } else {
+			                    yr = '19'+yr;
+		                    }
+		                    if (europeandate == true) {
+			                    dt = yr+date.substr(3,2)+date.substr(0,2);
+			                    return dt;
+		                    } else {
+			                    dt = yr+date.substr(0,2)+date.substr(3,2);
+			                    return dt;
+		                    }
+	                    }
+	                    return dt;
+                    }
+                    function ts_sort_date(a,b) {
+	                    dt1 = sort_date(ts_getInnerText(a.cells[SORT_COLUMN_INDEX]));
+	                    dt2 = sort_date(ts_getInnerText(b.cells[SORT_COLUMN_INDEX]));
+
+	                    if (dt1==dt2) {
+		                    return 0;
+	                    }
+	                    if (dt1<dt2) {
+		                    return -1;
+	                    }
+	                    return 1;
+                    }
+                    function ts_sort_numeric(a,b) {
+	                    var aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]);
+	                    aa = clean_num(aa);
+	                    var bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]);
+	                    bb = clean_num(bb);
+	                    return compare_numeric(aa,bb);
+                    }
+                    function compare_numeric(a,b) {
+	                    var a = parseFloat(a);
+	                    a = (isNaN(a) ? 0 : a);
+	                    var b = parseFloat(b);
+	                    b = (isNaN(b) ? 0 : b);
+	                    return a - b;
+                    }
+                    function ts_sort_caseinsensitive(a,b) {
+	                    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).toLowerCase();
+	                    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).toLowerCase();
+	                    if (aa==bb) {
+		                    return 0;
+	                    }
+	                    if (aa<bb) {
+		                    return -1;
+	                    }
+	                    return 1;
+                    }
+                    function ts_sort_cilocale(a,b) {
+	                    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).toLowerCase();
+	                    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).toLowerCase();
+	                    return collator.compare(aa,bb);
+                    }
+                    function ts_sort_default(a,b) {
+	                    aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]);
+	                    bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]);
+	                    if (aa==bb) {
+		                    return 0;
+	                    }
+	                    if (aa<bb) {
+		                    return -1;
+	                    }
+	                    return 1;
+                    }
+                    function addEvent(elm, evType, fn, useCapture)
+                    {
+	                    if (elm.addEventListener){
+		                    elm.addEventListener(evType, fn, useCapture);
+		                    return true;
+	                    } else if (elm.attachEvent){
+		                    var r = elm.attachEvent("on"+evType, fn);
+		                    return r;
+	                    } else {
+		                    alert("Handler could not be removed");
+	                    }
+                    }
+                    function clean_num(str) {
+	                    str = str.replace(new RegExp(/[^-?0-9.]/g),"");
+	                    return str;
+                    }
+                    function trim(s) {
+	                    return s.replace(/^\s+|\s+$/g, "");
+                    }
+                    function alternate(table) {
+	                    var tableBodies = table.getElementsByTagName("tbody");
+	                    for (var i = 0; i < tableBodies.length; i++) {
+		                    var tableRows = tableBodies[i].getElementsByTagName("tr");
+		                    for (var j = 0; j < tableRows.length; j++) {
+			                    if ( (j % 2) == 0  ) {
+				                    if ( !(tableRows[j].className.indexOf('odd') == -1) ) {
+					                    tableRows[j].className = tableRows[j].className.replace('odd', 'even');
+				                    } else {
+					                    if ( tableRows[j].className.indexOf('even') == -1 ) {
+						                    tableRows[j].className += " even";
+					                    }
+				                    }
+			                    } else {
+				                    if ( !(tableRows[j].className.indexOf('even') == -1) ) {
+					                    tableRows[j].className = tableRows[j].className.replace('even', 'odd');
+				                    } else {
+					                    if ( tableRows[j].className.indexOf('odd') == -1 ) {
+						                    tableRows[j].className += " odd";
+					                    }
+				                    }
+			                    }
+		                    }
+	                    }
+                    }
+                
+		</script>
+</head>
+<body class="defaultText">
+<a name="0"></a>
+<table>
+<tr>
+<td><img src="file:///P:/Monitor/logo/logo.bmp" width="80" height="80"></td><td>
+<h1>EXPORT &nbsp;&nbsp;&nbsp;&nbsp;2015-05-25 08:54:31</h1>
+</td>
+</tr>
+</table>
+<div class="tableDiv">
+<table class="tableBorder sortable" width="100%" id="resultTable" align="center">
+<tbody>
+<tr>
+<td class="tableHead textCell">Sk&oacute;re</td><td class="tableHead textCell">K_datum</td><td class="tableHead textCell">K_nazev</td><td class="tableHead textCell">K_rubrika</td><td class="tableHead textCell">K_puvod</td><td class="tableHead textCell">K_autor</td><td class="tableHead textCell">K_zdroj</td>
+</tr>
+<tr onmouseover="style.backgroundColor='rgba(189,213,223,0.5)'" onmouseout="style.backgroundColor='#FFFFFF'">
+<td class="textCell" style="white-space:nowrap">
+<div class="scoreDiv">
+<div style="display: none">8351</div>
+<span class="scoreProgress">▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍</span><span class="tableScore">84</span>
+</div>
+</td><td class="textCell">2015-05-22</td><td class="textCell"><a href="#1">GitHub terčem DDOS &uacute;toku</a></td><td class="textCell"><a href="#1">CHIP</a></td><td class="textCell"><a href="#1">Anopress</a></td><td class="textCell"><a href="#1">nezn&aacute;m&yacute;</a></td><td class="textCell"><a href="#1">Anopress</a></td>
+</tr>
+<tr onmouseover="style.backgroundColor='rgba(189,213,223,0.5)'" onmouseout="style.backgroundColor='#FFFFFF'">
+<td class="textCell" style="white-space:nowrap">
+<div class="scoreDiv">
+<div style="display: none">7967</div>
+<span class="scoreProgress">▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍</span><span class="tableScore">80</span>
+</div>
+</td><td class="textCell">2015-05-23</td><td class="textCell"><a href="#2">Obr&aacute;nci Berylie měli udržet s&iacute;ť po dva dny</a></td><td class="textCell"><a href="#2">Pr&aacute;vo</a></td><td class="textCell"><a href="#2">Anopress</a></td><td class="textCell"><a href="#2">(roš)</a></td><td class="textCell"><a href="#2">Anopress</a></td>
+</tr>
+<tr onmouseover="style.backgroundColor='rgba(189,213,223,0.5)'" onmouseout="style.backgroundColor='#FFFFFF'">
+<td class="textCell" style="white-space:nowrap">
+<div class="scoreDiv">
+<div style="display: none">7967</div>
+<span class="scoreProgress">▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍</span><span class="tableScore">80</span>
+</div>
+</td><td class="textCell">2015-05-23</td><td class="textCell"><a href="#3">Šiky hackerů houstnou, NATO utahuje s&iacute;ť</a></td><td class="textCell"><a href="#3">Pr&aacute;vo</a></td><td class="textCell"><a href="#3">Anopress</a></td><td class="textCell"><a href="#3">Jiř&iacute; Roškot</a></td><td class="textCell"><a href="#3">Anopress</a></td>
+</tr>
+<tr onmouseover="style.backgroundColor='rgba(189,213,223,0.5)'" onmouseout="style.backgroundColor='#FFFFFF'">
+<td class="textCell" style="white-space:nowrap">
+<div class="scoreDiv">
+<div style="display: none">10000</div>
+<span class="scoreProgress">▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍▍</span><span class="tableScore">100</span>
+</div>
+</td><td class="textCell">2015-05-25</td><td class="textCell"><a href="#4">Evropšt&iacute; islamist&eacute;, kv&oacute;ty a pařeniště radikalismu</a></td><td class="textCell"><a href="#4">Pr&aacute;vo</a></td><td class="textCell"><a href="#4">Anopress</a></td><td class="textCell"><a href="#4">Miloš Balab&aacute;n</a></td><td class="textCell"><a href="#4">Anopress</a></td>
+</tr>
+</tbody>
+</table>
+<div class="tableSummary">
+					Počet v&yacute;sledků:
+					4</div>
+</div>
+<div class="documentDiv">
+<a name="1"></a>
+<div class="buttons">
+<a class="b" href="#2">▶</a>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentTitleLeftDiv">
+<h2 title="GitHub terčem DDOS &uacute;toku">GitHub terčem DDOS &uacute;toku</h2>
+</div>
+<div class="documentContentDiv">
+<div class="verticalFieldsDiv">
+<div class="field verticalField">
+<span class="fieldName">Sk&oacute;re:&nbsp;</span><span class="fieldValue">84</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_datum:&nbsp;</span><span class="fieldValue">2015-05-22</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_nazev:&nbsp;</span><span class="fieldValue">GitHub terčem DDOS &uacute;toku</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_rubrika:&nbsp;</span><span class="fieldValue">CHIP</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_puvod:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_autor:&nbsp;</span><span class="fieldValue">nezn&aacute;m&yacute;</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_zdroj:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentText">Zdroj: CHIP  <br>Datum: 22.05.2015  <br>N&aacute;zev: GitHub terčem <span class="highlighted">DDOS</span> &uacute;toku  <br>Č&iacute;slo: 0006  <br>Str.: 024  <br>N&aacute;klad: 25216  <br>READ: 97000  <br>Rubrika: Trendy / Bezpečnost  <br>Jazyk: cz  <br>Domicil: CH06A24B.TXT  <br>Odkaz:   <br>ISSN: 1210-0684  <br>Oblast: Časopisy - telekomunikace a IT  <br>Zpracov&aacute;no: 23.05.2015 03:56:19  <br>Identifikace: CTCH20150522020053  <br>Hash: 5n8xeodbkn <br>ShortcutGroup: CA  <br>ShortcutArea: CT <br>Shortcut: CTCH <br>
+<br>Text: <br>Obl&iacute;ben&yacute; program&aacute;torsk&yacute; web GitHub se stal terčem masivn&iacute;ho <span class="highlighted">DDOS</span> &uacute;toku. Podle dosavadn&iacute;ho šetřen&iacute; se na cel&eacute; řadě serverů po cel&eacute;m světě objevila reklama od č&iacute;nsk&eacute;ho internetov&eacute;ho gigantu Baidu. Podvržen&yacute; javascriptov&yacute; k&oacute;d z n&iacute; pot&eacute; n&aacute;vštěvn&iacute;kům těchto webů zmanipuloval prohl&iacute;žeč tak, že se každ&eacute; dvě sekundy připojoval na GitHub. &Uacute;tok m&iacute;řil předevš&iacute;m na dva specifick&eacute; projekty (GreatFire a CN-NYTimes), kter&eacute; jsou zaměřeny na boj proti č&iacute;nsk&eacute; cenzuře. &Uacute;tok trval v&iacute;ce než 24 hodin, než se ho podařilo bezpečnostn&iacute;m expertům zlikvidovat. Baidu odm&iacute;tl, že by měl s &uacute;tokem cokoliv společn&eacute;ho.   <br>
+<br>Foto:  <br>
+<br>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="navigationBack">
+<a href="#0">Zpět na seznam</a>
+</div>
+</div>
+</div>
+<div class="documentDiv">
+<a name="2"></a>
+<div class="buttons">
+<a class="b" href="#1">◀</a><a class="b" href="#3">▶</a>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentTitleLeftDiv">
+<h2 title="Obr&aacute;nci Berylie měli udržet s&iacute;ť po dva dny">Obr&aacute;nci Berylie měli udržet s&iacute;ť po dva dny</h2>
+</div>
+<div class="documentContentDiv">
+<div class="verticalFieldsDiv">
+<div class="field verticalField">
+<span class="fieldName">Sk&oacute;re:&nbsp;</span><span class="fieldValue">80</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_datum:&nbsp;</span><span class="fieldValue">2015-05-23</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_nazev:&nbsp;</span><span class="fieldValue">Obr&aacute;nci Berylie měli udržet s&iacute;ť po dva dny</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_rubrika:&nbsp;</span><span class="fieldValue">Pr&aacute;vo</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_puvod:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_autor:&nbsp;</span><span class="fieldValue">(roš)</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_zdroj:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentText">Zdroj: Pr&aacute;vo  <br>Datum: 23.05.2015  <br>N&aacute;zev: Obr&aacute;nci Berylie měli udržet s&iacute;ť po dva dny  <br>Č&iacute;slo: 0119  <br>Str.: 020  <br>N&aacute;klad: 129924  <br>READ: 448000  <br>Rubrika: ze zahranič&iacute;  <br>Autor: (roš)  <br>Jazyk: cz  <br>Domicil: P119A20C.TXT  <br>Odkaz:   <br>ISSN: 1211-2119  <br>Oblast: Celost&aacute;tn&iacute; den&iacute;ky  <br>Zpracov&aacute;no: 23.05.2015 04:00:03  <br>Identifikace: DCPR20150523010066  <br>Hash: ufj5yi7c75 <br>ShortcutGroup: CE  <br>ShortcutArea: DC <br>Shortcut: DCPR <br>
+<br>Text: <br>Sc&eacute;n&aacute;ř aliančn&iacute;ho cvičen&iacute; Locked Shields 2015 zařadil děj do fiktivn&iacute; země Berylie. Jej&iacute; s&iacute;ť se dostala pod soustředěn&yacute; hackersk&yacute; &uacute;tok "červen&yacute;ch" s použit&iacute;m nejnovějš&iacute;ch metod. "Modř&iacute;" (t&yacute;my z&uacute;častněn&yacute;ch zem&iacute; a &uacute;střed&iacute; NATO) přispěchali Berylii na pomoc.   <br>Jejich &uacute;kol zněl: udržet s&iacute;ť otevřenou a v provozu po dva dny. "Je to, jako když jste pod tankovou palbou, a k tomu se přidaj&iacute; leteck&eacute; &uacute;toky," přibl&iacute;žil jejich situaci <span class="highlighted">Radek</span><span class="highlighted">Hol&yacute;</span> z NB&Uacute;.   <br>
+<br>Česk&yacute; expert: Důležit&eacute; je cvičit   <br>
+<br>"Zapojili jsme se do činnosti centra v Tallinu nejen proto, že je zdrojem důležit&yacute;ch a jedinečn&yacute;ch poznatků, ale že je důležit&eacute; i cvičit," řekl Pr&aacute;vu <span class="highlighted">Vladim&iacute;r</span><span class="highlighted">Rohel</span>, ředitel <span class="highlighted">N&aacute;rodn&iacute;ho</span><span class="highlighted">centra</span><span class="highlighted">kybernetick&eacute;</span><span class="highlighted">bezpečnosti</span>.   <br>Připomněl &uacute;tok na Česko v roce 2013, kter&yacute; byl z kategorie <span class="highlighted">DDoS</span> (Distributed Denial of Service, tedy znepř&iacute;stupněn&iacute; služeb zahlcen&iacute;m poč&iacute;tače požadavky z v&iacute;ce zdrojů) a nebyl moc siln&yacute;.   <br>I když nešlo o nic nov&eacute;ho, experty nemile překvapilo, jak&eacute; probl&eacute;my nastaly např&iacute;klad se sd&iacute;len&iacute;m informac&iacute; mezi bezpečnostn&iacute;mi t&yacute;my.   <br>"Pap&iacute;rově mohou b&yacute;t instituce či firmy na krizovou situaci připraveny. Když k n&iacute; pak ale skutečně dojde, objev&iacute; se najednou mnoho probl&eacute;mů, s nimiž se vůbec nepoč&iacute;talo, nebo se mohly zd&aacute;t okrajov&eacute;," řekl <span class="highlighted">Rohel</span>.   <br>Jde kupř&iacute;kladu o to, jak m&aacute; oper&aacute;tor zvl&aacute;dat nenad&aacute;l&yacute; souběh urgentn&iacute;ch &uacute;kolů - udržovat s&iacute;ť v chodu a připravovat š&eacute;fům odpovědi na dotazy m&eacute;di&iacute;, přičemž ti maj&iacute; sami pln&eacute; ruce pr&aacute;ce.  <br>
+<br>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="navigationBack">
+<a href="#0">Zpět na seznam</a>
+</div>
+</div>
+</div>
+<div class="documentDiv">
+<a name="3"></a>
+<div class="buttons">
+<a class="b" href="#2">◀</a><a class="b" href="#4">▶</a>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentTitleLeftDiv">
+<h2 title="Šiky hackerů houstnou, NATO utahuje s&iacute;ť">Šiky hackerů houstnou, NATO utahuje s&iacute;ť</h2>
+</div>
+<div class="documentContentDiv">
+<div class="verticalFieldsDiv">
+<div class="field verticalField">
+<span class="fieldName">Sk&oacute;re:&nbsp;</span><span class="fieldValue">80</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_datum:&nbsp;</span><span class="fieldValue">2015-05-23</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_nazev:&nbsp;</span><span class="fieldValue">Šiky hackerů houstnou, NATO utahuje s&iacute;ť</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_rubrika:&nbsp;</span><span class="fieldValue">Pr&aacute;vo</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_puvod:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_autor:&nbsp;</span><span class="fieldValue">Jiř&iacute; Roškot</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_zdroj:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentText">Zdroj: Pr&aacute;vo  <br>Datum: 23.05.2015  <br>N&aacute;zev: Šiky hackerů houstnou, NATO utahuje s&iacute;ť  <br>Č&iacute;slo: 0119  <br>Str.: 020  <br>N&aacute;klad: 129924  <br>READ: 448000  <br>Rubrika: ze zahranič&iacute;  <br>Autor: Jiř&iacute; Roškot  <br>Jazyk: cz  <br>Domicil: P119A20A.TXT  <br>Odkaz:   <br>ISSN: 1211-2119  <br>Oblast: Celost&aacute;tn&iacute; den&iacute;ky  <br>Zpracov&aacute;no: 23.05.2015 04:00:03  <br>Identifikace: DCPR20150523010064  <br>Hash: rncwo8y2n4 <br>ShortcutGroup: CE  <br>ShortcutArea: DC <br>Shortcut: DCPR <br>
+<br>Text: <br>Politici maj&iacute; dnes mobily a tablety t&eacute;měř přirostl&eacute; k ruk&aacute;m. Během dne jimi průběžně vyřizuj&iacute; skoro všechnu služebn&iacute; agendu. Tot&eacute;ž plat&iacute; nejen o vl&aacute;dě, ale o cel&eacute; st&aacute;tn&iacute; spr&aacute;vě a podnikatel&iacute;ch s cel&yacute;mi arm&aacute;dami jejich laptopů a stoln&iacute;ch poč&iacute;tačů.   <br>Najednou ale přich&aacute;z&iacute; z centra kybernetick&eacute; bezpečnosti varovn&yacute; sign&aacute;l: nab&iacute;ječky k elektronick&eacute;mu zař&iacute;zen&iacute; konkr&eacute;tn&iacute; značky jsou "heknut&eacute;" - tedy maj&iacute; v sobě vir, kter&yacute; infikuje řekněme pr&aacute;vě mobily, a citliv&eacute; skutečnosti může č&iacute;st někdo jin&yacute;.   <br>
+<br>Rizikem je i &uacute;tok na infrastrukturu   <br>
+<br>Nast&aacute;v&aacute; z&aacute;vod s časem: jak zareaguje dodavatel, j&iacute;mž může b&yacute;t i př&iacute;mo v&yacute;robce? Vyměnil snad př&iacute;slušenstv&iacute; v někter&eacute; f&aacute;zi distribuce za př&iacute;slušenstv&iacute; od jin&eacute;ho subdodavatele? St&aacute;hne a nahrad&iacute; př&iacute;slušenstv&iacute; stejně, jako to dělaj&iacute; automobilky s defektn&iacute; s&eacute;ri&iacute; vozů?   <br>Zatěžk&aacute;vac&iacute;m testem proch&aacute;z&iacute; kvalita smlouvy s takov&yacute;m dodavatelem. Předevš&iacute;m zda a jak ošetřuje dokument bezpečnostn&iacute; karamboly tohoto druhu. Tak nějak vypad&aacute; jeden ze sc&eacute;n&aacute;řů cvičen&iacute; NATO Cyber Coalition, jenž běž&iacute; pravidelně od roku 2008.   <br>Jde v nich tak&eacute; o bleskov&eacute; sd&iacute;len&iacute; zjištěn&yacute;ch hrozeb a reakci na &uacute;toky proti aliančn&iacute;m syst&eacute;mům, nebo proti jednotliv&yacute;m člensk&yacute;m zem&iacute;m.   <br>Kybernetick&aacute; džungle houstne a dravců v n&iacute; kvapem přib&yacute;v&aacute;. Vypl&yacute;v&aacute; to i z poznatků N&aacute;rodn&iacute;ho bezpečnostn&iacute;ho &uacute;řadu, kter&yacute; je u n&aacute;s gestorem kybernetick&eacute; bezpečnosti.   <br>Na webu lov&iacute; "osaměl&iacute; vlci", skupiny nekomerčn&iacute;ch i komerčn&iacute;ch hackerů, ale tak&eacute; profesion&aacute;ln&iacute; t&yacute;my tajn&yacute;ch služeb či arm&aacute;d.   <br>Do t&eacute;to dimenze nav&iacute;c pronikaj&iacute; i "ajť&aacute;ci" teroristů. Nemus&iacute; j&iacute;t jen o v&yacute;zvědnou činnost a kraden&iacute; dat, ale tak&eacute; o &uacute;točn&eacute; operace schopn&eacute; oslepit velitelsk&eacute; struktury a zbraňov&eacute; syst&eacute;my, nebo vyřadit životně důležitou infrastrukturu země.   <br>Důsledky mohou b&yacute;t pro modern&iacute; společnost stejně zničuj&iacute;c&iacute; jako konvenčn&iacute; &uacute;tok, shodl se loňsk&yacute; aliančn&iacute; summit ve Walesu a zařadil proto kyberobranu k z&aacute;kladn&iacute;m funkc&iacute;m NATO.   <br>Letos koncem dubna vyhr&aacute;lo v Estonsku cvičen&iacute; Locked Shields 2015 (Zamčen&eacute; št&iacute;ty), jedno z největš&iacute;ch ve světě. Oceněni byli i dva češt&iacute; z&aacute;stupci z brněnsk&eacute;ho kybercentra, kteř&iacute; měli na starosti vazby na m&eacute;dia a pr&aacute;vn&iacute; aspekty.   <br>
+<br>---  <br>
+<br>Pap&iacute;rově mohou b&yacute;t instituce připraveny, ale když dojde ke krizi, objev&iacute; se mnoho probl&eacute;mů <span class="highlighted">Vladim&iacute;r</span><span class="highlighted">Rohel</span>, ředitel <span class="highlighted">N&aacute;rodn&iacute;ho</span><span class="highlighted">centra</span><span class="highlighted">kybernetick&eacute;</span><span class="highlighted">bezpečnosti</span>
+<br>
+<br>
+<span class="highlighted">Baštou</span> je Tallin Kyberobrana NATO m&aacute; centrum v estonsk&eacute; metropoli Tallinu už od roku 2007. Aktivně v něm nyn&iacute; působ&iacute; 16 z osmadvaceti členů včetně Česka - od roku 2014. Od loňska m&aacute; NATO i vylepšen&yacute; expertn&iacute; t&yacute;m rychl&eacute; reakce. Ten je v př&iacute;padě nutnosti schopen pomoci napaden&eacute; člensk&eacute; zemi.   <br>
+<br>Foto: NATO organizuje pravideln&aacute; cvičen&iacute; proti kybernetick&yacute;m &uacute;tokům už od roku 2008.   <br>Foto Profimedia.cz  <br>
+<br>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="navigationBack">
+<a href="#0">Zpět na seznam</a>
+</div>
+</div>
+</div>
+<div class="documentDiv">
+<a name="4"></a>
+<div class="buttons">
+<a class="b" href="#3">◀</a>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentTitleLeftDiv">
+<h2 title="Evropšt&iacute; islamist&eacute;, kv&oacute;ty a pařeniště radikalismu">Evropšt&iacute; islamist&eacute;, kv&oacute;ty a pařeniště radikalismu</h2>
+</div>
+<div class="documentContentDiv">
+<div class="verticalFieldsDiv">
+<div class="field verticalField">
+<span class="fieldName">Sk&oacute;re:&nbsp;</span><span class="fieldValue">100</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_datum:&nbsp;</span><span class="fieldValue">2015-05-25</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_nazev:&nbsp;</span><span class="fieldValue">Evropšt&iacute; islamist&eacute;, kv&oacute;ty a pařeniště radikalismu</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_rubrika:&nbsp;</span><span class="fieldValue">Pr&aacute;vo</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_puvod:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_autor:&nbsp;</span><span class="fieldValue">Miloš Balab&aacute;n</span>&nbsp;&nbsp;&nbsp;</div>
+<div class="field verticalField">
+<span class="fieldName">K_zdroj:&nbsp;</span><span class="fieldValue">Anopress</span>&nbsp;&nbsp;&nbsp;</div>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="documentText">Zdroj: Pr&aacute;vo  <br>Datum: 25.05.2015  <br>N&aacute;zev: Evropšt&iacute; islamist&eacute;, kv&oacute;ty a pařeniště radikalismu  <br>Č&iacute;slo: 0120  <br>Str.: 006  <br>N&aacute;klad: 129924  <br>READ: 448000  <br>Rubrika: Publicistika  <br>Autor: Miloš Balab&aacute;n  <br>Jazyk: cz  <br>Domicil: P120A06E.TXT  <br>Odkaz:   <br>ISSN: 1211-2119  <br>Oblast: Celost&aacute;tn&iacute; den&iacute;ky  <br>Zpracov&aacute;no: 25.05.2015 04:10:01  <br>Identifikace: DCPR20150525010024  <br>Hash: 86atpmn336 <br>ShortcutGroup: CE  <br>ShortcutArea: DC <br>Shortcut: DCPR <br>
+<br>Text: <br>Isl&aacute;msk&yacute; st&aacute;t nen&iacute; na &uacute;stupu, naopak. V S&yacute;rii již ovl&aacute;d&aacute; pades&aacute;t procent jej&iacute;ho &uacute;zem&iacute;. Leteck&aacute; koalice veden&aacute; Spojen&yacute;mi st&aacute;ty tak zřejmě nen&iacute; &uacute;spěšn&aacute;. Dalš&iacute; eskalace konfliktu může přidat na s&iacute;le dalš&iacute;m uprchlick&yacute;m vln&aacute;m m&iacute;ř&iacute;c&iacute;m do Evropy.   <br>Paradoxn&iacute; je, když se s nimi m&iacute;j&iacute; několik tis&iacute;c občanů Evropsk&eacute; unie, kteř&iacute; se rozhodli bojovat na straně IS. Během dvou let od roku 2013 stoupl jejich počet sedmkr&aacute;t, z šesti set na čtyři tis&iacute;ce. V počtu vedou Francie a Brit&aacute;nie s přibližně 1200 osobami, 600 poch&aacute;z&iacute; z Německa a zbytek je z dalš&iacute;ch evropsk&yacute;ch st&aacute;tů. Zaj&iacute;mav&yacute; je i přepočet na počet obyvatel, kdy je největš&iacute;m "přispěvatelem" Belgie s pod&iacute;lem čtyřicet osob a D&aacute;nsko s dvaceti sedmi osobami na mili&oacute;n obyvatel.   <br>A d&aacute;vaj&iacute; o sobě vědět i osobn&iacute; &uacute;čast&iacute; na spektakul&aacute;rn&iacute;ch poprav&aacute;ch z&aacute;padn&iacute;ch rukojm&iacute;ch. Pro Evropu to nevěst&iacute; nic dobr&eacute;ho, protože potenci&aacute;ln&iacute; n&aacute;vrat zradikalizovan&yacute;ch Evropanů s bojov&yacute;mi zkušenostmi do domovsk&yacute;ch zem&iacute; představuje bezpečnostn&iacute; riziko. Pro zpravodajsk&eacute; služby a policie v zem&iacute;ch EU je to bezesporu velk&yacute; bolehlav.   <br>V&aacute;žn&yacute;m probl&eacute;mem se v Evropě st&aacute;v&aacute; n&aacute;bor mezi isl&aacute;msk&eacute; bojovn&iacute;ky prostřednictv&iacute;m internetu. Zpravodajsk&eacute; služby již upozorňuj&iacute; na novou taktiku IS, kter&yacute; pr&aacute;vě jeho prostřednictv&iacute;m komunikuje se zradikalizovan&yacute;mi jednotlivci, ale i s mal&yacute;mi teroristick&yacute;mi skupinami. Tento tzv. individu&aacute;ln&iacute; džih&aacute;d je přitom pro zpravodajsk&eacute; služby zpoč&aacute;tku velmi těžce zachytiteln&yacute;.   <br>Vedle toho n&aacute;m zač&iacute;n&aacute; hrozit i "digit&aacute;ln&iacute; džih&aacute;d", jak poč&aacute;tkem dubna uk&aacute;zal hackersk&yacute; &uacute;tok z tzv. CyberCaliphate na francouzskou televizn&iacute; stanici TV5 Monde. Radik&aacute;ln&iacute; islamist&eacute; t&iacute;m prok&aacute;zali i svoji schopnost &uacute;toků na <span class="highlighted">kritickou</span><span class="highlighted">infrastrukturu</span>, což představuje dalš&iacute; hrozbu pro evropsk&eacute; společnosti. Dopady takov&eacute;ho &uacute;toku by mohly b&yacute;t nesrovnatelně horš&iacute; než &uacute;tok na New York a Washington 11. z&aacute;ř&iacute; 2001.   <br>M&aacute;me tady ale i dalš&iacute;, nem&eacute;ně v&aacute;žnou dimenzi hrozby spojenou s podporou IS. Ned&aacute;vno na ni upozornil filozof a biolog Stanislav Kom&aacute;rek. Podle něj je krajně znepokojiv&eacute;, že řada mlad&yacute;ch lid&iacute; vyrostl&yacute;ch v Evropě dobrovolně přech&aacute;z&iacute; pod prapory brut&aacute;ln&iacute;ho Isl&aacute;msk&eacute;ho st&aacute;tu.   <br>"Nen&iacute; prostřed&iacute; okraje z&aacute;padoevropsk&yacute;ch společnost&iacute;, kter&eacute; na jedn&eacute; straně štědře rozd&aacute;vaj&iacute; skromn&eacute; podpory, na druh&eacute; svou touhou po stabilitě t&eacute;měř vylučuj&iacute; jak&eacute;koli šance, nakonec nutně pařeništěm radikalismu nejrůznějš&iacute;ho typu?" pt&aacute; se Kom&aacute;rek.   <br>A do tohoto pařeniště chce Brusel uv&eacute;st dalš&iacute; př&iacute;choz&iacute; podle kv&oacute;t.   <br>
+<br>Foto:   <br>
+<br>O autorovi: Miloš Balab&aacute;n (Autor je bezpečnostn&iacute; analytik)  <br>
+<br>
+</div>
+<div class="basicRuleDiv thickRule"></div>
+<div class="navigationBack">
+<a href="#0">Zpět na seznam</a>
+</div>
+</div>
+</div>
+<div class="tableSummary footer">
+			Generated by Tovek Tools.
+		</div>
+</body>
+</html>
